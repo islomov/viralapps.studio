@@ -58,7 +58,7 @@
         }
         footer a { color: #86868b; text-decoration: none; }
         footer a:hover { text-decoration: underline; }
-    
+
         @media (prefers-color-scheme: dark) {
             body { background: #1c1c1e; color: #f5f5f7; }
             h1, h2 { color: #f5f5f7; }
@@ -86,36 +86,47 @@
             <li>Personal information (name, email, phone number)</li>
             <li>Location data</li>
             <li>Contacts or address book data</li>
-            <li>Content of files you convert</li>
-            <li>Analytics or usage data</li>
+            <li>Analytics or usage tracking data</li>
         </ul>
 
         <h2>On-Device Processing</h2>
-        <p>All file conversions are performed entirely on your device. Your files are never uploaded to any server. The App supports 74 file formats across images, videos, audio, and documents — all processed locally using on-device conversion engines.</p>
+        <p>The majority of file conversions — including all image, video, and audio formats — are performed entirely on your device using on-device conversion engines. Your files for these conversions are never uploaded to any server.</p>
+
+        <h2>Document Conversions via Third-Party Service</h2>
+        <p>For document format conversions (DOC, DOCX, PDF, HTML, ODT, RTF, TXT), the App uses a third-party service called <strong>CloudConvert</strong> to process the conversion. When you convert a document:</p>
+        <ul>
+            <li>Your file is temporarily uploaded to CloudConvert's servers for processing</li>
+            <li>The converted file is downloaded back to your device</li>
+            <li>CloudConvert deletes uploaded files from their servers after processing</li>
+        </ul>
+        <p>CloudConvert's privacy policy is available at <a href="https://cloudconvert.com/privacy">cloudconvert.com/privacy</a>. We do not share any personal information with CloudConvert — only the file content necessary for conversion.</p>
 
         <h2>Data Stored on Your Device</h2>
         <p>The App stores the following data locally on your device only:</p>
         <ul>
-            <li><strong>Conversion history:</strong> Records of files you have converted, including file names, formats, and dates</li>
+            <li><strong>Conversion history:</strong> Records of files you have converted, including file names, formats, thumbnails, and dates (up to 500 records)</li>
             <li><strong>Converted files:</strong> Output files from conversions, stored in the App's local storage</li>
-            <li><strong>App preferences:</strong> Your settings and preferences</li>
+            <li><strong>App preferences:</strong> Your settings such as preferred language and theme</li>
         </ul>
-        <p>This data never leaves your device and is not accessible to us. You can delete this data at any time through the app or by deleting the App.</p>
+        <p>This data never leaves your device and is not accessible to us. You can delete this data at any time through the App or by deleting the App.</p>
 
-        <h2>Photo Library and File Access</h2>
-        <p>The App requests access to:</p>
+        <h2>Device Permissions</h2>
+        <p>The App may request access to the following device features:</p>
         <ul>
-            <li><strong>Photo Library (read):</strong> Used to import images, videos, and other media files for conversion. We do not access any files beyond what you explicitly select.</li>
-            <li><strong>Photo Library (write):</strong> Used to save converted files back to your photo library when you choose to do so.</li>
+            <li><strong>Photo Library (read &amp; write):</strong> Used to import images, videos, and other media files for conversion, and to save converted files back to your photo library. We do not access any files beyond what you explicitly select.</li>
+            <li><strong>Camera:</strong> Used to capture photos and videos directly for conversion.</li>
+            <li><strong>Microphone:</strong> Used to record audio directly for conversion.</li>
             <li><strong>Files app:</strong> Used to import and export documents and other files for conversion through the iOS file picker.</li>
         </ul>
         <p>These permissions are requested only when needed and can be revoked at any time in your device's Settings.</p>
 
-        <h2>Network Requests</h2>
-        <p>The App does not make any network requests. All processing happens entirely on your device. No file content, usage data, or any other information is ever transmitted over the network.</p>
-
         <h2>Third-Party Services</h2>
-        <p>The App does not use any third-party services. There are no analytics, advertising, or tracking SDKs integrated into the App.</p>
+        <p>The App uses the following third-party services:</p>
+        <ul>
+            <li><strong>CloudConvert:</strong> Used for document format conversions as described above. Only file content is transmitted; no personal data is shared.</li>
+            <li><strong>Firebase Remote Config:</strong> Used to deliver app configuration updates (such as feature flags and supported format lists). This service does not collect personal data or usage analytics in our implementation.</li>
+        </ul>
+        <p>The App does not use any advertising or analytics SDKs. Firebase Analytics and Firebase Ads are explicitly disabled.</p>
 
         <h2>Children's Privacy</h2>
         <p>The App does not knowingly collect any information from children under the age of 13. The App does not require any personal information to function.</p>

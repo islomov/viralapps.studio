@@ -3,72 +3,494 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rango Simple Converter - Viral Apps Studio</title>
+    <title>Rangoo: File Converter — Convert Images, Videos, Audio & Documents</title>
+    <meta name="description" content="Rangoo converts 74+ file formats on your iPhone — images, videos, audio, and documents. Fast, private, fully on-device.">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif;
             background: #000;
             color: #fff;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        /* Hero */
+        .hero {
             min-height: 100vh;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-        }
-        .container {
             text-align: center;
-            padding: 2rem;
-            max-width: 600px;
+            padding: 4rem 2rem 2rem;
+            background: radial-gradient(ellipse at 50% 0%, #0A84FF12 0%, transparent 60%);
+            position: relative;
         }
-        h1 {
+        .hero .app-icon {
+            width: 120px;
+            height: 120px;
+            border-radius: 27px;
+            box-shadow: 0 8px 40px rgba(10, 132, 255, 0.2);
+            margin-bottom: 1.25rem;
+        }
+        .hero h1 {
+            font-size: 3.2rem;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            line-height: 1.1;
+            margin-bottom: 0.75rem;
+        }
+        .hero h1 span {
+            background: linear-gradient(135deg, #0A84FF, #5AC8FA);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .hero .subtitle {
+            font-size: 1.15rem;
+            color: #999;
+            max-width: 460px;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+        }
+        .cta-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: #fff;
+            color: #000;
+            font-size: 1rem;
+            font-weight: 600;
+            padding: 0.85rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            transition: transform 0.15s, box-shadow 0.2s;
+        }
+        .cta-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 20px rgba(255,255,255,0.15);
+        }
+        .cta-btn:active { transform: scale(0.97); }
+        .cta-btn svg { width: 18px; height: 18px; }
+
+        /* Screenshot carousel */
+        .screenshots-section {
+            padding: 4rem 0 5rem;
+            overflow: hidden;
+        }
+        .screenshots-section h2 {
+            text-align: center;
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 2.5rem;
+        }
+        .screenshots-track {
+            display: flex;
+            gap: 1.25rem;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+            padding: 0 2rem 1.5rem;
+            scrollbar-width: none;
+        }
+        .screenshots-track::-webkit-scrollbar { display: none; }
+        .screenshots-track img {
+            flex: 0 0 auto;
+            width: 220px;
+            border-radius: 20px;
+            scroll-snap-align: center;
+            box-shadow: 0 4px 30px rgba(0,0,0,0.5);
+        }
+
+        /* Stats bar */
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            padding: 3.5rem 2rem;
+            border-top: 1px solid #161616;
+            border-bottom: 1px solid #161616;
+        }
+        .stat { text-align: center; }
+        .stat-number {
+            font-size: 2.4rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #F7931A, #FF6B00);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .stat-label {
+            font-size: 0.8rem;
+            color: #666;
+            margin-top: 0.25rem;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+        }
+
+        /* Section */
+        section {
+            padding: 5rem 2rem;
+            max-width: 960px;
+            margin: 0 auto;
+        }
+        section h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 0.6rem;
+        }
+        section .section-sub {
+            text-align: center;
+            color: #888;
+            font-size: 1rem;
+            margin-bottom: 3rem;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.5;
+        }
+
+        /* Categories grid */
+        .categories {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+        .category {
+            background: #0d0d0d;
+            border: 1px solid #1a1a1a;
+            border-radius: 20px;
+            padding: 1.75rem 1.5rem;
+            transition: border-color 0.2s, transform 0.15s;
+        }
+        .category:hover {
+            border-color: #333;
+            transform: translateY(-2px);
+        }
+        .category-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+        }
+        .category-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+        .category-dot.image { background: #0A84FF; }
+        .category-dot.video { background: #FF375F; }
+        .category-dot.audio { background: #30D158; }
+        .category-dot.document { background: #FF9F0A; }
+        .category h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+        .category .count {
+            font-size: 0.8rem;
+            color: #666;
+            margin-bottom: 0.75rem;
+        }
+        .category .formats {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.3rem;
+        }
+        .category .formats span {
+            font-size: 0.65rem;
+            font-weight: 600;
+            padding: 0.2rem 0.45rem;
+            border-radius: 5px;
+            background: #ffffff0a;
+            color: #555;
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
+        }
+
+        /* Tools grid */
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.75rem;
+        }
+        .tool {
+            background: #0d0d0d;
+            border: 1px solid #1a1a1a;
+            border-radius: 14px;
+            padding: 1.25rem 0.75rem;
+            text-align: center;
+            transition: border-color 0.2s;
+        }
+        .tool:hover { border-color: #333; }
+        .tool-name {
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: #ccc;
+        }
+
+        /* Features */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+        }
+        .feature {
+            background: #0d0d0d;
+            border: 1px solid #1a1a1a;
+            border-radius: 20px;
+            padding: 2rem 1.25rem;
+            text-align: center;
+            transition: border-color 0.2s;
+        }
+        .feature:hover { border-color: #333; }
+        .feature-icon {
+            font-size: 1.75rem;
+            margin-bottom: 0.75rem;
+        }
+        .feature h3 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 0.35rem;
+        }
+        .feature p {
+            font-size: 0.8rem;
+            color: #777;
+            line-height: 1.5;
+        }
+
+        /* CTA bottom */
+        .cta-section {
+            text-align: center;
+            padding: 5rem 2rem 4rem;
+            background: radial-gradient(ellipse at 50% 100%, #0A84FF08 0%, transparent 60%);
+        }
+        .cta-section h2 {
             font-size: 2.2rem;
             font-weight: 700;
             margin-bottom: 0.5rem;
         }
-        .tagline {
-            font-size: 1.1rem;
+        .cta-section p {
             color: #888;
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
         }
-        .links {
-            display: flex;
-            gap: 1.5rem;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-        .links a {
-            color: #0A84FF;
-            text-decoration: none;
-            font-size: 0.95rem;
-        }
-        .links a:hover {
-            text-decoration: underline;
-        }
+
+        /* Footer */
         footer {
-            margin-top: 3rem;
+            text-align: center;
+            padding: 2rem;
+            border-top: 1px solid #111;
             font-size: 0.8rem;
-            color: #555;
+            color: #444;
         }
-        footer a {
-            color: #555;
-            text-decoration: none;
+        footer a { color: #666; text-decoration: none; }
+        footer a:hover { color: #999; }
+        footer .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 0.75rem;
         }
-        footer a:hover {
-            text-decoration: underline;
+
+        /* Responsive */
+        @media (max-width: 700px) {
+            .hero h1 { font-size: 2.4rem; }
+            .hero .subtitle { font-size: 1rem; }
+            .hero .app-icon { width: 96px; height: 96px; border-radius: 22px; }
+            .stats { gap: 1.5rem; flex-wrap: wrap; }
+            .stat-number { font-size: 1.8rem; }
+            .categories { grid-template-columns: 1fr; }
+            .tools-grid { grid-template-columns: repeat(3, 1fr); }
+            .features { grid-template-columns: 1fr; }
+            section h2 { font-size: 1.6rem; }
+            .screenshots-track img { width: 180px; border-radius: 16px; }
+        }
+        @media (max-width: 400px) {
+            .hero h1 { font-size: 2rem; }
+            .hero .app-icon { width: 80px; height: 80px; border-radius: 18px; }
+            .tools-grid { grid-template-columns: repeat(2, 1fr); }
+            .screenshots-track img { width: 160px; border-radius: 14px; }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Rango Simple Converter</h1>
-        <p class="tagline">Convert any file format on your device</p>
-        <div class="links">
+
+    <!-- Hero -->
+    <div class="hero">
+        <img src="app-icon.png" alt="Rangoo App Icon" class="app-icon">
+        <h1><span>Rangoo</span></h1>
+        <p class="subtitle">The all-in-one file converter for iPhone. Images, videos, audio, documents — 74+ formats, fully on-device.</p>
+        <a href="https://apps.apple.com/app/rangoo-file-converter/id6759793517" class="cta-btn" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+            Download Free on App Store
+        </a>
+    </div>
+
+    <!-- Screenshots -->
+    <div class="screenshots-section">
+        <h2>See it in action</h2>
+        <div class="screenshots-track">
+            <img src="screenshots/1.jpg" alt="Rangoo - All-in-One Media Toolkit" loading="lazy">
+            <img src="screenshots/3.jpg" alt="Rangoo - All Tools" loading="lazy">
+            <img src="screenshots/7.jpg" alt="Rangoo - Image Conversion" loading="lazy">
+            <img src="screenshots/8.jpg" alt="Rangoo - Video Tools" loading="lazy">
+            <img src="screenshots/5.jpg" alt="Rangoo - Document Tools" loading="lazy">
+            <img src="screenshots/6.jpg" alt="Rangoo - Video to GIF" loading="lazy">
+            <img src="screenshots/9.jpg" alt="Rangoo - Audio Conversion" loading="lazy">
+            <img src="screenshots/10.jpg" alt="Rangoo - Settings" loading="lazy">
+            <img src="screenshots/4.jpg" alt="Rangoo - Conversion History" loading="lazy">
+            <img src="screenshots/2.jpg" alt="Rangoo - Format Support" loading="lazy">
+        </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats">
+        <div class="stat">
+            <div class="stat-number">74+</div>
+            <div class="stat-label">Formats</div>
+        </div>
+        <div class="stat">
+            <div class="stat-number">4</div>
+            <div class="stat-label">Media Types</div>
+        </div>
+        <div class="stat">
+            <div class="stat-number">15+</div>
+            <div class="stat-label">Tools</div>
+        </div>
+        <div class="stat">
+            <div class="stat-number">100%</div>
+            <div class="stat-label">Free & Private</div>
+        </div>
+    </div>
+
+    <!-- Categories -->
+    <section>
+        <h2>One app for every format</h2>
+        <p class="section-sub">Convert between 74+ formats across all media types.</p>
+        <div class="categories">
+            <div class="category">
+                <div class="category-header">
+                    <div class="category-dot image"></div>
+                    <h3>Images</h3>
+                </div>
+                <div class="count">21 formats</div>
+                <div class="formats">
+                    <span>HEIC</span><span>JPEG</span><span>PNG</span><span>WEBP</span><span>GIF</span><span>TIFF</span><span>BMP</span><span>JP2</span><span>TGA</span><span>PBM</span><span>EXR</span><span>+10</span>
+                </div>
+            </div>
+            <div class="category">
+                <div class="category-header">
+                    <div class="category-dot video"></div>
+                    <h3>Videos</h3>
+                </div>
+                <div class="count">21 formats</div>
+                <div class="formats">
+                    <span>MP4</span><span>MOV</span><span>AVI</span><span>MKV</span><span>WEBM</span><span>FLV</span><span>WMV</span><span>3GP</span><span>MPG</span><span>TS</span><span>VOB</span><span>+10</span>
+                </div>
+            </div>
+            <div class="category">
+                <div class="category-header">
+                    <div class="category-dot audio"></div>
+                    <h3>Audio</h3>
+                </div>
+                <div class="count">25 formats</div>
+                <div class="formats">
+                    <span>MP3</span><span>WAV</span><span>FLAC</span><span>AAC</span><span>OGG</span><span>OPUS</span><span>M4A</span><span>AIFF</span><span>WMA</span><span>AC3</span><span>DTS</span><span>+14</span>
+                </div>
+            </div>
+            <div class="category">
+                <div class="category-header">
+                    <div class="category-dot document"></div>
+                    <h3>Documents</h3>
+                </div>
+                <div class="count">7 formats</div>
+                <div class="formats">
+                    <span>PDF</span><span>DOCX</span><span>DOC</span><span>HTML</span><span>RTF</span><span>ODT</span><span>TXT</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tools -->
+    <section>
+        <h2>More than a converter</h2>
+        <p class="section-sub">Compress, resize, merge, trim, and more — all built in.</p>
+        <div class="tools-grid">
+            <div class="tool"><div class="tool-name">Convert</div></div>
+            <div class="tool"><div class="tool-name">Compress</div></div>
+            <div class="tool"><div class="tool-name">Resize</div></div>
+            <div class="tool"><div class="tool-name">Rotate</div></div>
+            <div class="tool"><div class="tool-name">Crop</div></div>
+            <div class="tool"><div class="tool-name">Stitch</div></div>
+            <div class="tool"><div class="tool-name">Make GIF</div></div>
+            <div class="tool"><div class="tool-name">Trim Video</div></div>
+            <div class="tool"><div class="tool-name">Extract Audio</div></div>
+            <div class="tool"><div class="tool-name">Speed Change</div></div>
+            <div class="tool"><div class="tool-name">Merge</div></div>
+            <div class="tool"><div class="tool-name">Video Ratio</div></div>
+            <div class="tool"><div class="tool-name">Reorder PDF</div></div>
+            <div class="tool"><div class="tool-name">Protect PDF</div></div>
+            <div class="tool"><div class="tool-name">Split PDF</div></div>
+            <div class="tool"><div class="tool-name">Merge PDF</div></div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section>
+        <h2>Why Rangoo?</h2>
+        <p class="section-sub">Built for simplicity, speed, and your privacy.</p>
+        <div class="features">
+            <div class="feature">
+                <div class="feature-icon">&#x26A1;</div>
+                <h3>Lightning Fast</h3>
+                <p>Images in under 2s. Videos in under 30s. No waiting around.</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">&#x1F512;</div>
+                <h3>100% Private</h3>
+                <p>All processing on-device. Nothing leaves your phone. Ever.</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">&#x1F4F1;</div>
+                <h3>Dead Simple</h3>
+                <p>Pick a file, choose a format, tap convert. Done.</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">&#x1F3A8;</div>
+                <h3>Beautiful UI</h3>
+                <p>Clean design with smooth animations and haptic feedback.</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">&#x1F310;</div>
+                <h3>30 Languages</h3>
+                <p>Use Rangoo in your language. Switch anytime in settings.</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">&#x1F4B0;</div>
+                <h3>Completely Free</h3>
+                <p>Every feature, every format. No subscriptions, no hidden fees.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bottom CTA -->
+    <div class="cta-section">
+        <h2>Ready to convert anything?</h2>
+        <p>Free on the App Store. No account needed.</p>
+        <a href="https://apps.apple.com/app/rangoo-file-converter/id6759793517" class="cta-btn" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+            Download Free on App Store
+        </a>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-links">
             <a href="privacy-policy">Privacy Policy</a>
             <a href="terms-of-use">Terms of Use</a>
         </div>
-        <footer>
-            <a href="/">Viral Apps Studio</a>
-        </footer>
-    </div>
+        <p>&copy; 2026 <a href="/">Viral Apps Studio</a></p>
+    </footer>
+
 </body>
 </html>
